@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WUB CSE 74D — Online & On-Campus Class Routine</title>
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        slate: {
+                            850: '#151e32',
+                            950: '#090d16',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 min-h-screen transition-colors duration-300 antialiased selection:bg-indigo-500 selection:text-white">
+
+    <!-- Decorative Ambient Background Blobs -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div class="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-indigo-500/10 dark:bg-indigo-600/15 blur-3xl"></div>
+        <div class="absolute top-1/3 -left-40 w-96 h-96 rounded-full bg-cyan-500/10 dark:bg-cyan-500/10 blur-3xl"></div>
+        <div class="absolute -bottom-40 right-1/4 w-96 h-96 rounded-full bg-purple-500/10 dark:bg-purple-600/15 blur-3xl"></div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+
+        <!-- Top Navigation / Header -->
+        <header class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 pb-6 border-b border-slate-200/80 dark:border-slate-800/80">
+            <!-- Brand & Title -->
+            <div class="flex items-start sm:items-center gap-4">
+                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-indigo-600 via-blue-600 to-cyan-500 flex items-center justify-center text-white shadow-lg shadow-indigo-500/25 shrink-0">
+                    <i data-lucide="graduation-cap" class="w-7 h-7 sm:w-8 sm:h-8"></i>
+                </div>
+                <div>
+                    <div class="flex flex-wrap items-center gap-2.5">
+                        <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight bg-gradient-to-r from-slate-900 via-indigo-900 to-slate-800 dark:from-white dark:via-indigo-200 dark:to-slate-300 bg-clip-text text-transparent">
+                            WUB CSE 74D
+                        </h1>
+                        <span class="px-2.5 py-0.5 text-xs font-semibold rounded-full bg-indigo-100 text-indigo-700 dark:bg-indigo-500/20 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-500/30">
+                            Batch 74 • Sec D
+                        </span>
+                    </div>
+                    <p class="text-sm sm:text-base text-slate-600 dark:text-slate-400 mt-0.5">
+                        World University of Bangladesh • Dept. of CSE • Class Routine
+                    </p>
+                </div>
+            </div>
+
+            <!-- Live Clock, Status & Theme Toggle -->
+            <div class="flex flex-wrap items-center gap-3 self-start lg:self-auto">
+                <!-- Live Clock Pill -->
+                <div class="flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-slate-200/80 dark:border-slate-800 shadow-sm">
+                    <div class="text-right">
+                        <div id="live-clock" class="font-mono text-base sm:text-lg font-bold text-slate-900 dark:text-white leading-none">
+                            00:00:00 PM
+                        </div>
+                        <div id="live-date" class="text-xs text-slate-500 dark:text-slate-400 mt-1 font-medium">
+                            Loading date...
+                        </div>
+                    </div>
+                    <div class="h-8 w-px bg-slate-200 dark:bg-slate-800"></div>
+                    <div id="header-status-badge" class="flex items-center gap-1.5 px-2.5 py-1 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+                        <span class="w-2 h-2 rounded-full bg-slate-400"></span>
+                        <span>Checking...</span>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex items-center gap-2">
+                    <button onclick="copyScheduleToClipboard()" title="Copy Routine to Clipboard" class="p-3 rounded-2xl bg-white/80 dark:bg-slate-900/80 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-800 text-slate-700 dark:text-slate-300 transition-all shadow-sm active:scale-95 flex items-center gap-2 text-sm font-medium">
+                        <i data-lucide="copy" class="w-4 h-4"></i>
+                        <span class="hidden sm:inline">Copy Routine</span>
+                    </button>
+                    <button id="theme-toggle" onclick="toggleTheme()" title="Toggle Light/Dark Mode" class="p-3 rounded-2xl bg-white/80 dark:bg-slate-900/80 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-800 text-slate-700 dark:text-slate-300 transition-all shadow-sm active:scale-95">
+                        <i id="theme-icon-sun" data-lucide="sun" class="w-4 h-4 hidden dark:block text-amber-400"></i>
+                        <i id="theme-icon-moon" data-lucide="moon" class="w-4 h-4 block dark:hidden text-indigo-600"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Live Countdown / Next Class Hero Banner -->
+        <section id="countdown-banner" class="mt-6 rounded-3xl p-5 sm:p-7 bg-gradient-to-br from-indigo-600 via-indigo-700 to-slate-900 text-white shadow-xl shadow-indigo-950/20 border border-indigo-400/20 relative overflow-hidden">
+            <div class="absolute right-0 top-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/3 blur-2xl pointer-events-none"></div>
+            <div class="relative z-10 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+                <!-- Left Info -->
+                <div class="space-y-2 max-w-2xl">
+                    <div class="flex flex-wrap items-center gap-2">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 backdrop-blur-md text-xs font-semibold uppercase tracking-wider text-indigo-100 border border-white/15">
+                            <span id="banner-pulse" class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                            <span id="banner-eyebrow">UPCOMING CLASS</span>
+                        </div>
+                        <span id="banner-mode-pill" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-400/20 text-cyan-100 border border-cyan-300/30 text-xs font-bold uppercase tracking-wider">
+                            Online
+                        </span>
+                    </div>
+                    <h2 id="banner-title" class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
+                        Calculating next session...
+                    </h2>
+                    <p id="banner-subtitle" class="text-indigo-100/90 text-sm sm:text-base flex flex-wrap items-center gap-x-4 gap-y-1">
+                        <span>Loading schedule details...</span>
+                    </p>
+                </div>
+
+                <!-- Right Countdown Boxes -->
+                <div class="flex items-center">
+                    <div id="countdown-boxes" class="grid grid-cols-4 gap-2 sm:gap-2.5 text-center w-full sm:w-auto">
+                        <div class="bg-slate-950/40 backdrop-blur-md border border-white/10 rounded-2xl px-3.5 py-2.5 min-w-[64px]">
+                            <div id="cd-days" class="font-mono text-xl sm:text-2xl font-bold text-white">00</div>
+                            <div class="text-[10px] uppercase tracking-wider text-indigo-200 mt-0.5">Days</div>
+                        </div>
+                        <div class="bg-slate-950/40 backdrop-blur-md border border-white/10 rounded-2xl px-3.5 py-2.5 min-w-[64px]">
+                            <div id="cd-hours" class="font-mono text-xl sm:text-2xl font-bold text-white">00</div>
+                            <div class="text-[10px] uppercase tracking-wider text-indigo-200 mt-0.5">Hrs</div>
+                        </div>
+                        <div class="bg-slate-950/40 backdrop-blur-md border border-white/10 rounded-2xl px-3.5 py-2.5 min-w-[64px]">
+                            <div id="cd-mins" class="font-mono text-xl sm:text-2xl font-bold text-white">00</div>
+                            <div class="text-[10px] uppercase tracking-wider text-indigo-200 mt-0.5">Min</div>
+                        </div>
+                        <div class="bg-slate-950/40 backdrop-blur-md border border-white/10 rounded-2xl px-3.5 py-2.5 min-w-[64px]">
+                            <div id="cd-secs" class="font-mono text-xl sm:text-2xl font-bold text-cyan-300">00</div>
+                            <div class="text-[10px] uppercase tracking-wider text-indigo-200 mt-0.5">Sec</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Controls Bar: Mode Filter Tabs & Day Filter Pills -->
+        <section class="mt-8 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+            <!-- Mode Switcher (All / Online / On-Campus) -->
+            <div class="inline-flex p-1.5 rounded-2xl bg-slate-200/70 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 self-start overflow-x-auto max-w-full">
+                <button onclick="setModeFilter('ALL')" id="mode-btn-ALL" class="mode-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center gap-2 whitespace-nowrap bg-white dark:bg-slate-800 text-indigo-600 dark:text-white shadow-sm">
+                    <i data-lucide="calendar-days" class="w-4 h-4"></i>
+                    <span>All Classes</span>
+                </button>
+                <button onclick="setModeFilter('Online')" id="mode-btn-Online" class="mode-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center gap-2 whitespace-nowrap text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
+                    <i data-lucide="laptop" class="w-4 h-4"></i>
+                    <span>Online Only</span>
+                </button>
+                <button onclick="setModeFilter('On-Campus')" id="mode-btn-On-Campus" class="mode-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center gap-2 whitespace-nowrap text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
+                    <i data-lucide="building-2" class="w-4 h-4"></i>
+                    <span>On-Campus Only</span>
+                </button>
+            </div>
+
+            <!-- Day Filter Pills -->
+            <div id="day-filter-bar" class="flex items-center gap-1.5 overflow-x-auto pb-1 lg:pb-0 no-scrollbar">
+                <!-- Populated dynamically by JS -->
+            </div>
+        </section>
+
+        <!-- Full-Width Routine Display Area -->
+        <main id="routine-container" class="mt-6 space-y-5">
+            <!-- Dynamically rendered schedule cards go here -->
+        </main>
+
+        <!-- Footer -->
+        <footer class="mt-12 pt-6 border-t border-slate-200/80 dark:border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 dark:text-slate-400">
+            <p>World University of Bangladesh (WUB) • Department of CSE • Batch 74, Section D</p>
+            <p class="font-mono">Official Online & On-Campus Class Routine</p>
+        </footer>
+    </div>
+
+    <!-- Custom Toast Notification Container -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- Application Logic -->
+    <script>
+        /**
+         * WUB CSE 74D Complete Weekly Class Routine (Online & On-Campus)
+         * Focused strictly on displaying the class schedule cleanly and accurately.
+         */
+
+        const STORAGE_KEY_THEME = 'wub_cse_74d_theme_v2';
+
+        const DAYS_OF_WEEK = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        const DISPLAY_DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+        // Official Complete Weekly Routine for WUB CSE 74D
+        const SCHEDULE_DATA = [
+            // Monday — Online
+            {
+                id: 'mon-phy1',
+                subject: 'Physics 1',
+                day: 'Monday',
+                startTime: '21:00', // 9:00 PM
+                endTime: '22:00',   // 10:00 PM
+                mode: 'Online',
+                type: 'Theory',
+                color: 'blue'
+            },
+            // Tuesday — Online
+            {
+                id: 'tue-dm',
+                subject: 'Discrete Mathematics',
+                day: 'Tuesday',
+                startTime: '20:00', // 8:00 PM
+                endTime: '21:00',   // 9:00 PM
+                mode: 'Online',
+                type: 'Theory',
+                color: 'purple'
+            },
+            {
+                id: 'tue-prog',
+                subject: 'Introduction to Programming',
+                day: 'Tuesday',
+                startTime: '21:00', // 9:00 PM
+                endTime: '22:00',   // 10:00 PM
+                mode: 'Online',
+                type: 'Theory',
+                color: 'cyan'
+            },
+            // Wednesday — Online
+            {
+                id: 'wed-comm',
+                subject: 'Professional Communication',
+                day: 'Wednesday',
+                startTime: '20:00', // 8:00 PM
+                endTime: '21:00',   // 9:00 PM
+                mode: 'Online',
+                type: 'Theory',
+                color: 'indigo'
+            },
+            // Friday — On-Campus
+            {
+                id: 'fri-dm',
+                subject: 'Discrete Mathematics',
+                day: 'Friday',
+                startTime: '08:45', // 8:45 AM
+                endTime: '09:30',   // 9:30 AM
+                mode: 'On-Campus',
+                type: 'Theory',
+                color: 'emerald'
+            },
+            {
+                id: 'fri-prog',
+                subject: 'Introduction to Programming',
+                day: 'Friday',
+                startTime: '11:00', // 11:00 AM
+                endTime: '11:45',   // 11:45 AM
+                mode: 'On-Campus',
+                type: 'Theory',
+                color: 'emerald'
+            },
+            {
+                id: 'fri-phy1',
+                subject: 'Physics 1',
+                day: 'Friday',
+                startTime: '12:30', // 12:30 PM
+                endTime: '13:05',   // 1:05 PM
+                mode: 'On-Campus',
+                type: 'Theory',
+                color: 'emerald'
+            },
+            {
+                id: 'fri-comm',
+                subject: 'Professional Communication',
+                day: 'Friday',
+                startTime: '14:20', // 2:20 PM
+                endTime: '15:05',   // 3:05 PM
+                mode: 'On-Campus',
+                type: 'Theory',
+                color: 'emerald'
+            },
+            // Saturday — On-Campus Lab
+            {
+                id: 'sat-prog-lab',
+                subject: 'Introduction to Programming Lab',
+                day: 'Saturday',
+                startTime: '15:00', // 3:00 PM
+                endTime: '15:45',   // 3:45 PM
+                mode: 'On-Campus',
+                type: 'Lab Class',
+                color: 'amber'
+            }
+        ];
+
+        // Mode & Type Badge Styling
+        const MODE_STYLES = {
+            'Online': {
+                badge: 'bg-cyan-500/15 text-cyan-700 dark:text-cyan-300 border-cyan-500/30',
+                dot: 'bg-cyan-500',
+                icon: 'laptop',
+                cardHover: 'hover:border-cyan-500/50',
+                timeColor: 'text-cyan-600 dark:text-cyan-400'
+            },
+            'On-Campus': {
+                badge: 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border-emerald-500/30',
+                dot: 'bg-emerald-500',
+                icon: 'building-2',
+                cardHover: 'hover:border-emerald-500/50',
+                timeColor: 'text-emerald-600 dark:text-emerald-400'
+            }
+        };
+
+        // App Filter State
+        let selectedModeFilter = 'ALL'; // 'ALL' | 'Online' | 'On-Campus'
+        let selectedDayFilter = 'ALL';  // 'ALL' | 'TODAY' | day name
+
+        // ==========================================
+        // INITIALIZATION
+        // ==========================================
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            renderDayFilterPills();
+            renderRoutine();
+            startLiveClockAndCountdown();
+            lucide.createIcons();
+        });
+
+        function initTheme() {
+            const savedTheme = localStorage.getItem(STORAGE_KEY_THEME);
+            if (savedTheme === 'light') {
+                document.documentElement.classList.remove('dark');
+            } else {
+                document.documentElement.classList.add('dark');
+            }
+        }
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            const isDark = html.classList.toggle('dark');
+            localStorage.setItem(STORAGE_KEY_THEME, isDark ? 'dark' : 'light');
+            lucide.createIcons();
+        }
+
+        // ==========================================
+        // TIME & SCHEDULE ENGINE
+        // ==========================================
+        function formatTime12h(time24) {
+            const [hStr, mStr] = time24.split(':');
+            let h = parseInt(hStr, 10);
+            const ampm = h >= 12 ? 'PM' : 'AM';
+            h = h % 12;
+            if (h === 0) h = 12;
+            return `${h}:${mStr} ${ampm}`;
+        }
+
+        function parseTimeToMinutes(time24) {
+            const [h, m] = time24.split(':').map(Number);
+            return h * 60 + m;
+        }
+
+        function getTodayName(now = new Date()) {
+            return DAYS_OF_WEEK[now.getDay()];
+        }
+
+        function evaluateScheduleStatus(now = new Date()) {
+            const currentDayIndex = now.getDay();
+            const currentMinutes = now.getHours() * 60 + now.getMinutes();
+            const todayName = DAYS_OF_WEEK[currentDayIndex];
+
+            const todaysClasses = SCHEDULE_DATA
+                .filter(c => c.day === todayName)
+                .sort((a, b) => parseTimeToMinutes(a.startTime) - parseTimeToMinutes(b.startTime));
+
+            // 1. Check if a class is LIVE right now
+            for (const cls of todaysClasses) {
+                const startMin = parseTimeToMinutes(cls.startTime);
+                const endMin = parseTimeToMinutes(cls.endTime);
+                if (currentMinutes >= startMin && currentMinutes < endMin) {
+                    const endTarget = new Date(now);
+                    endTarget.setHours(Math.floor(endMin / 60), endMin % 60, 0, 0);
+                    return {
+                        state: 'LIVE',
+                        targetClass: cls,
+                        targetDate: endTarget,
+                        todaysClasses
+                    };
+                }
+            }
+
+            // 2. Find nearest upcoming class within next 7 days
+            let bestCandidate = null;
+            let bestDiffMs = Infinity;
+
+            for (const cls of SCHEDULE_DATA) {
+                const clsDayIndex = DAYS_OF_WEEK.indexOf(cls.day);
+                if (clsDayIndex === -1) continue;
+
+                let dayDiff = (clsDayIndex - currentDayIndex + 7) % 7;
+                const startMin = parseTimeToMinutes(cls.startTime);
+
+                if (dayDiff === 0 && startMin <= currentMinutes) {
+                    dayDiff = 7;
+                }
+
+                const candidateDate = new Date(now);
+                candidateDate.setDate(now.getDate() + dayDiff);
+                candidateDate.setHours(Math.floor(startMin / 60), startMin % 60, 0, 0);
+
+                const diffMs = candidateDate.getTime() - now.getTime();
+                if (diffMs > 0 && diffMs < bestDiffMs) {
+                    bestDiffMs = diffMs;
+                    bestCandidate = {
+                        cls,
+                        targetDate: candidateDate,
+                        dayDiff
+                    };
+                }
+            }
+
+            return {
+                state: bestCandidate ? (bestCandidate.dayDiff === 0 ? 'UPCOMING_TODAY' : 'UPCOMING_FUTURE') : 'EMPTY',
+                targetClass: bestCandidate ? bestCandidate.cls : null,
+                targetDate: bestCandidate ? bestCandidate.targetDate : null,
+                dayDiff: bestCandidate ? bestCandidate.dayDiff : null,
+                todaysClasses
+            };
+        }
+
+        let lastHighlightedClassId = null;
+
+        function startLiveClockAndCountdown() {
+            const update = () => {
+                const now = new Date();
+
+                // Update Header Clock
+                const clockEl = document.getElementById('live-clock');
+                const dateEl = document.getElementById('live-date');
+                if (clockEl) {
+                    clockEl.textContent = now.toLocaleTimeString('en-US', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit',
+                        hour12: true
+                    });
+                }
+                if (dateEl) {
+                    dateEl.textContent = now.toLocaleDateString('en-US', {
+                        weekday: 'long',
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric'
+                    });
+                }
+
+                const status = evaluateScheduleStatus(now);
+                updateHeaderStatusBadge(status);
+                updateCountdownBanner(status, now);
+
+                const currentTargetId = status.targetClass ? status.targetClass.id : null;
+                if (currentTargetId !== lastHighlightedClassId) {
+                    lastHighlightedClassId = currentTargetId;
+                    renderRoutine();
+                }
+            };
+
+            update();
+            setInterval(update, 1000);
+        }
+
+        function updateHeaderStatusBadge(status) {
+            const badge = document.getElementById('header-status-badge');
+            if (!badge) return;
+
+            if (status.state === 'LIVE') {
+                badge.className = 'flex items-center gap-1.5 px-2.5 py-1 rounded-xl text-xs font-bold bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30';
+                badge.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span><span>Class In Session</span>`;
+            } else if (status.state === 'UPCOMING_TODAY') {
+                badge.className = 'flex items-center gap-1.5 px-2.5 py-1 rounded-xl text-xs font-semibold bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30';
+                badge.innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-500"></span><span>Class Today</span>`;
+            } else if (status.todaysClasses && status.todaysClasses.length > 0) {
+                badge.className = 'flex items-center gap-1.5 px-2.5 py-1 rounded-xl text-xs font-semibold bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 border border-indigo-500/30';
+                badge.innerHTML = `<span class="w-2 h-2 rounded-full bg-indigo-500"></span><span>Classes Done Today</span>`;
+            } else {
+                badge.className = 'flex items-center gap-1.5 px-2.5 py-1 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400';
+                badge.innerHTML = `<span class="w-2 h-2 rounded-full bg-slate-400"></span><span>Off Day Today</span>`;
+            }
+        }
+
+        function updateCountdownBanner(status, now) {
+            const eyebrowEl = document.getElementById('banner-eyebrow');
+            const modePillEl = document.getElementById('banner-mode-pill');
+            const titleEl = document.getElementById('banner-title');
+            const subEl = document.getElementById('banner-subtitle');
+            const pulseEl = document.getElementById('banner-pulse');
+            const bannerEl = document.getElementById('countdown-banner');
+
+            if (!status.targetClass || !status.targetDate) return;
+
+            const cls = status.targetClass;
+            const timeRange = `${formatTime12h(cls.startTime)} – ${formatTime12h(cls.endTime)}`;
+            const isOnline = cls.mode === 'Online';
+
+            modePillEl.textContent = `${cls.mode} • ${cls.type}`;
+            modePillEl.className = isOnline
+                ? 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-400/20 text-cyan-100 border border-cyan-300/30 text-xs font-bold uppercase tracking-wider'
+                : 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-400/20 text-emerald-100 border border-emerald-300/30 text-xs font-bold uppercase tracking-wider';
+
+            if (status.state === 'LIVE') {
+                bannerEl.className = 'mt-6 rounded-3xl p-5 sm:p-7 bg-gradient-to-br from-emerald-600 via-teal-700 to-slate-900 text-white shadow-xl shadow-emerald-950/20 border border-emerald-400/30 relative overflow-hidden';
+                pulseEl.className = 'w-2 h-2 rounded-full bg-white animate-ping';
+                eyebrowEl.textContent = 'LIVE NOW • ENDS IN';
+                titleEl.textContent = cls.subject;
+                subEl.innerHTML = `
+                    <span class="inline-flex items-center gap-1.5"><i data-lucide="calendar" class="w-4 h-4"></i> Today (${cls.day})</span>
+                    <span class="inline-flex items-center gap-1.5"><i data-lucide="clock" class="w-4 h-4"></i> ${timeRange}</span>
+                `;
+            } else {
+                bannerEl.className = isOnline
+                    ? 'mt-6 rounded-3xl p-5 sm:p-7 bg-gradient-to-br from-indigo-600 via-blue-700 to-slate-900 text-white shadow-xl shadow-indigo-950/20 border border-indigo-400/20 relative overflow-hidden'
+                    : 'mt-6 rounded-3xl p-5 sm:p-7 bg-gradient-to-br from-teal-700 via-emerald-800 to-slate-900 text-white shadow-xl shadow-emerald-950/20 border border-emerald-400/20 relative overflow-hidden';
+                pulseEl.className = 'w-2 h-2 rounded-full bg-cyan-300 animate-pulse';
+                eyebrowEl.textContent = status.dayDiff === 0 ? 'UPCOMING TODAY' : `NEXT SCHEDULED CLASS • ${cls.day.toUpperCase()}`;
+                titleEl.textContent = cls.subject;
+                subEl.innerHTML = `
+                    <span class="inline-flex items-center gap-1.5"><i data-lucide="calendar" class="w-4 h-4"></i> ${status.dayDiff === 0 ? 'Today, ' : ''}${cls.day}</span>
+                    <span class="inline-flex items-center gap-1.5"><i data-lucide="clock" class="w-4 h-4"></i> ${timeRange}</span>
+                `;
+            }
+
+            const diffMs = Math.max(0, status.targetDate.getTime() - now.getTime());
+            const totalSecs = Math.floor(diffMs / 1000);
+            const days = Math.floor(totalSecs / 86400);
+            const hours = Math.floor((totalSecs % 86400) / 3600);
+            const mins = Math.floor((totalSecs % 3600) / 60);
+            const secs = totalSecs % 60;
+
+            document.getElementById('cd-days').textContent = String(days).padStart(2, '0');
+            document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('cd-mins').textContent = String(mins).padStart(2, '0');
+            document.getElementById('cd-secs').textContent = String(secs).padStart(2, '0');
+            lucide.createIcons();
+        }
+
+        // ==========================================
+        // FILTERING & RENDERING ROUTINE
+        // ==========================================
+        function setModeFilter(mode) {
+            selectedModeFilter = mode;
+            document.querySelectorAll('.mode-tab').forEach(btn => {
+                btn.className = 'mode-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center gap-2 whitespace-nowrap text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white';
+            });
+            const activeBtn = document.getElementById(`mode-btn-${mode}`);
+            if (activeBtn) {
+                activeBtn.className = 'mode-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center gap-2 whitespace-nowrap bg-white dark:bg-slate-800 text-indigo-600 dark:text-white shadow-sm';
+            }
+            renderDayFilterPills();
+            renderRoutine();
+        }
+
+        function setDayFilter(day) {
+            selectedDayFilter = day;
+            renderDayFilterPills();
+            renderRoutine();
+        }
+
+        function getFilteredClasses() {
+            return SCHEDULE_DATA.filter(cls => {
+                if (selectedModeFilter !== 'ALL' && cls.mode !== selectedModeFilter) {
+                    return false;
+                }
+                return true;
+            });
+        }
+
+        function renderDayFilterPills() {
+            const container = document.getElementById('day-filter-bar');
+            const today = getTodayName();
+            const filteredByMode = getFilteredClasses();
+            const pills = ['ALL', 'TODAY', ...DISPLAY_DAYS];
+
+            container.innerHTML = pills.map(pill => {
+                const isSelected = selectedDayFilter === pill;
+                const targetDay = pill === 'TODAY' ? today : pill;
+                const isTodayPill = pill === 'TODAY' || pill === today;
+                const hasClasses = pill === 'ALL' || filteredByMode.some(c => c.day === targetDay);
+
+                let label = pill;
+                if (pill === 'ALL') label = 'All Days';
+                else if (pill === 'TODAY') label = `Today (${today.slice(0, 3)})`;
+                else label = pill.slice(0, 3);
+
+                let baseClass = 'px-3.5 py-2 rounded-xl text-xs font-semibold transition-all whitespace-nowrap flex items-center gap-1.5 border ';
+                if (isSelected) {
+                    baseClass += 'bg-indigo-600 text-white border-indigo-600 shadow-sm';
+                } else {
+                    baseClass += 'bg-white/80 dark:bg-slate-900/80 text-slate-600 dark:text-slate-400 border-slate-200/80 dark:border-slate-800 hover:border-indigo-400/50';
+                }
+
+                return `
+                    <button onclick="setDayFilter('${pill}')" class="${baseClass}">
+                        <span>${label}</span>
+                        ${isTodayPill && pill !== 'TODAY' ? `<span class="w-1.5 h-1.5 rounded-full ${isSelected ? 'bg-white' : 'bg-indigo-500'}" title="Today"></span>` : ''}
+                        ${!hasClasses && pill !== 'ALL' && pill !== 'TODAY' ? `<span class="text-[10px] opacity-60">(Off)</span>` : ''}
+                    </button>
+                `;
+            }).join('');
+        }
+
+        function renderRoutine() {
+            const container = document.getElementById('routine-container');
+            const now = new Date();
+            const today = getTodayName(now);
+            const status = evaluateScheduleStatus(now);
+            const activeClassId = status.targetClass ? status.targetClass.id : null;
+            const activeState = status.state;
+
+            const filteredClasses = getFilteredClasses();
+
+            let daysToRender = DISPLAY_DAYS;
+            if (selectedDayFilter === 'TODAY') {
+                daysToRender = [today];
+            } else if (selectedDayFilter !== 'ALL') {
+                daysToRender = [selectedDayFilter];
+            } else if (selectedModeFilter !== 'ALL') {
+                // When filtering specifically by Online Only or On-Campus Only across All Days, show only days that have classes in that mode
+                daysToRender = DISPLAY_DAYS.filter(d => filteredClasses.some(c => c.day === d));
+            }
+
+            container.innerHTML = daysToRender.map(day => {
+                const dayClasses = filteredClasses
+                    .filter(c => c.day === day)
+                    .sort((a, b) => parseTimeToMinutes(a.startTime) - parseTimeToMinutes(b.startTime));
+                const isToday = day === today;
+
+                // Determine day's primary mode badge if all classes on that day share a mode
+                const uniqueModes = [...new Set(dayClasses.map(c => c.mode))];
+                const dayModeLabel = uniqueModes.length === 1 ? uniqueModes[0] : (uniqueModes.length > 1 ? 'Online & On-Campus' : '');
+
+                return `
+                    <div class="rounded-3xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border ${isToday ? 'border-indigo-500/60 ring-2 ring-indigo-500/15' : 'border-slate-200/80 dark:border-slate-800'} p-5 sm:p-6 shadow-sm transition-all">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                            <div class="flex items-center gap-3">
+                                <h3 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">${day}</h3>
+                                ${isToday ? `<span class="px-2.5 py-0.5 text-xs font-bold rounded-full bg-indigo-600 text-white">TODAY</span>` : ''}
+                                ${dayModeLabel ? `
+                                    <span class="px-2.5 py-0.5 text-xs font-semibold rounded-full ${dayModeLabel === 'Online' ? 'bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/20' : 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20'}">
+                                        ${dayModeLabel}
+                                    </span>
+                                ` : ''}
+                            </div>
+                            <span class="text-xs font-medium px-2.5 py-1 rounded-lg ${dayClasses.length > 0 ? 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300' : 'bg-slate-100/60 dark:bg-slate-800/40 text-slate-400 dark:text-slate-500'}">
+                                ${dayClasses.length > 0 ? `${dayClasses.length} ${dayClasses.length === 1 ? 'Class' : 'Classes'}` : 'Off Day'}
+                            </span>
+                        </div>
+
+                        ${dayClasses.length > 0 ? `
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                ${dayClasses.map(cls => buildClassCardHTML(cls, cls.id === activeClassId ? activeState : null)).join('')}
+                            </div>
+                        ` : `
+                            <div class="rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 py-6 px-4 text-center bg-slate-50/50 dark:bg-slate-950/30">
+                                <p class="text-sm font-medium text-slate-500 dark:text-slate-400">Off Day • No Classes Scheduled</p>
+                            </div>
+                        `}
+                    </div>
+                `;
+            }).join('');
+
+            lucide.createIcons();
+        }
+
+        function buildClassCardHTML(cls, highlightState = null) {
+            const style = MODE_STYLES[cls.mode] || MODE_STYLES['Online'];
+            const timeStr = `${formatTime12h(cls.startTime)} – ${formatTime12h(cls.endTime)}`;
+            const isLab = cls.type === 'Lab Class';
+
+            let highlightRing = '';
+            let statusChip = '';
+
+            if (highlightState === 'LIVE') {
+                highlightRing = 'ring-2 ring-emerald-500 border-emerald-500/60 bg-emerald-500/5 dark:bg-emerald-950/20';
+                statusChip = `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-bold bg-emerald-500 text-white animate-pulse">LIVE</span>`;
+            } else if (highlightState === 'UPCOMING_TODAY' || highlightState === 'UPCOMING_FUTURE') {
+                highlightRing = 'ring-1 ring-indigo-500/50 border-indigo-500/40';
+                statusChip = `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-semibold bg-indigo-500/15 text-indigo-600 dark:text-indigo-300">NEXT</span>`;
+            }
+
+            return `
+                <div class="rounded-2xl bg-slate-50/90 dark:bg-slate-950/70 border border-slate-200/90 dark:border-slate-800/90 ${style.cardHover} ${highlightRing} p-4 sm:p-5 transition-all duration-200 flex flex-col justify-between">
+                    <div>
+                        <!-- Top Badges: Mode & Type -->
+                        <div class="flex items-center justify-between gap-2 flex-wrap">
+                            <div class="flex items-center gap-2">
+                                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border ${style.badge}">
+                                    <i data-lucide="${style.icon}" class="w-3.5 h-3.5"></i>
+                                    <span>${cls.mode}</span>
+                                </span>
+                                <span class="px-2 py-1 rounded-lg text-xs font-medium ${isLab ? 'bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/30' : 'bg-slate-200/70 dark:bg-slate-800 text-slate-600 dark:text-slate-300'}">
+                                    ${cls.type}
+                                </span>
+                            </div>
+                            ${statusChip}
+                        </div>
+
+                        <!-- Course Title -->
+                        <h4 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white mt-3.5 leading-snug">
+                            ${cls.subject}
+                        </h4>
+                    </div>
+
+                    <!-- Time Slot Footer -->
+                    <div class="mt-4 pt-3 border-t border-slate-200/70 dark:border-slate-800/70 flex items-center gap-2 font-mono text-xs sm:text-sm font-semibold ${style.timeColor}">
+                        <i data-lucide="clock" class="w-4 h-4 shrink-0"></i>
+                        <span>${timeStr}</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ==========================================
+        // COPY ROUTINE TO CLIPBOARD & TOASTS
+        // ==========================================
+        function copyScheduleToClipboard() {
+            let text = `📚 WUB CSE 74D — Complete Class Routine\n`;
+            text += `World University of Bangladesh\n`;
+            text += `====================================\n`;
+
+            DISPLAY_DAYS.forEach(day => {
+                const dayClasses = SCHEDULE_DATA
+                    .filter(c => c.day === day)
+                    .sort((a, b) => parseTimeToMinutes(a.startTime) - parseTimeToMinutes(b.startTime));
+                if (dayClasses.length > 0) {
+                    const modeHeader = [...new Set(dayClasses.map(c => c.mode))].join(' / ');
+                    text += `\n🗓️ ${day} (${modeHeader}):\n`;
+                    dayClasses.forEach(c => {
+                        text += `  • ${c.subject}: ${formatTime12h(c.startTime)} – ${formatTime12h(c.endTime)}\n`;
+                    });
+                }
+            });
+
+            const tempInput = document.createElement('textarea');
+            tempInput.value = text.trim();
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            try {
+                document.execCommand('copy');
+                showToast('Complete Online & On-Campus routine copied!', 'success');
+            } catch (err) {
+                showToast('Could not copy text automatically.', 'error');
+            }
+            document.body.removeChild(tempInput);
+        }
+
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+
+            const colors = {
+                success: 'bg-emerald-600 text-white border-emerald-500',
+                info: 'bg-slate-900 dark:bg-slate-800 text-white border-slate-700',
+                error: 'bg-rose-600 text-white border-rose-500'
+            };
+
+            toast.className = `pointer-events-auto px-4 py-3 rounded-2xl border shadow-xl text-xs sm:text-sm font-medium flex items-center gap-2.5 transform transition-all duration-300 translate-y-2 opacity-0 ${colors[type] || colors.info}`;
+            toast.innerHTML = `
+                <i data-lucide="${type === 'success' ? 'check-circle-2' : 'info'}" class="w-4 h-4 shrink-0"></i>
+                <span>${message}</span>
+            `;
+
+            container.appendChild(toast);
+            lucide.createIcons();
+
+            requestAnimationFrame(() => {
+                toast.classList.remove('translate-y-2', 'opacity-0');
+            });
+
+            setTimeout(() => {
+                toast.classList.add('translate-y-2', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
