@@ -73,58 +73,55 @@
     <!-- Main Container -->
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
 
-        <!-- Top Navigation / Header -->
-        <header class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 pb-6 border-b border-slate-300/80 dark:border-slate-800">
+        <!-- Compact University Spreadsheet Header -->
+        <header class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 pb-5 border-b border-slate-300/80 dark:border-slate-800">
             <!-- Brand & Title -->
-            <div class="flex items-start sm:items-center gap-4">
-                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-indigo-600 via-blue-600 to-cyan-600 flex items-center justify-center text-white shadow-lg shadow-indigo-500/20 shrink-0">
-                    <i data-lucide="table-2" class="w-7 h-7 sm:w-8 sm:h-8"></i>
+            <div class="flex items-start sm:items-center gap-3.5">
+                <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-indigo-600 via-blue-600 to-cyan-600 flex items-center justify-center text-white shadow-md shadow-indigo-500/20 shrink-0">
+                    <i data-lucide="table-2" class="w-6 h-6 sm:w-7 sm:h-7"></i>
                 </div>
                 <div>
-                    <div class="flex flex-wrap items-center gap-2.5">
-                        <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-                            WUB CSE 74D
+                    <div class="flex flex-wrap items-center gap-2">
+                        <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+                            WUB • CSE Batch 74D — Class Routine
                         </h1>
-                        <span class="px-2.5 py-0.5 text-xs font-semibold rounded-md bg-indigo-100 text-indigo-800 dark:bg-indigo-500/20 dark:text-indigo-300 border border-indigo-300 dark:border-indigo-500/30">
-                            Batch 74 • Sec D
+                        <span class="px-2 py-0.5 text-[11px] font-bold rounded bg-indigo-100 text-indigo-800 dark:bg-indigo-500/20 dark:text-indigo-300 border border-indigo-300 dark:border-indigo-500/30">
+                            Master Timetable
                         </span>
                     </div>
-                    <p class="text-sm sm:text-base text-slate-600 dark:text-slate-400 mt-0.5">
-                        World University of Bangladesh • Dept. of CSE • Official Class Routine Sheet
+                    <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-0.5">
+                        World University of Bangladesh • Department of Computer Science & Engineering
                     </p>
                 </div>
             </div>
 
-            <!-- Live Clock, Status & Sheet Actions -->
-            <div class="flex flex-wrap items-center gap-3 self-start lg:self-auto no-print">
+            <!-- Minimal Live Status/Next-Class Pill, Clock & Print Button -->
+            <div class="flex flex-wrap items-center gap-2.5 self-start lg:self-auto no-print">
+                <!-- Minimal Next Class / Live Status Pill -->
+                <div id="next-class-pill" class="flex items-center gap-2 px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-300/90 dark:border-slate-800 shadow-sm text-xs">
+                    <span id="status-dot" class="w-2 h-2 rounded-full bg-indigo-500 shrink-0"></span>
+                    <span id="next-class-text" class="font-semibold text-slate-700 dark:text-slate-200">Checking schedule...</span>
+                </div>
+
                 <!-- Live Clock Pill -->
-                <div class="flex items-center gap-3 px-4 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-300/90 dark:border-slate-800 shadow-sm">
+                <div class="flex items-center gap-2.5 px-3.5 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-300/90 dark:border-slate-800 shadow-sm">
                     <div class="text-right">
-                        <div id="live-clock" class="font-mono text-sm sm:text-base font-bold text-slate-900 dark:text-white leading-none">
+                        <div id="live-clock" class="font-mono text-xs sm:text-sm font-bold text-slate-900 dark:text-white leading-none">
                             00:00:00 PM
                         </div>
-                        <div id="live-date" class="text-[11px] text-slate-500 dark:text-slate-400 mt-1 font-medium">
-                            Loading date...
+                        <div id="live-date" class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 font-medium">
+                            Loading...
                         </div>
-                    </div>
-                    <div class="h-8 w-px bg-slate-200 dark:bg-slate-800"></div>
-                    <div id="header-status-badge" class="flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
-                        <span class="w-2 h-2 rounded-full bg-slate-400"></span>
-                        <span>Checking...</span>
                     </div>
                 </div>
 
-                <!-- Action Buttons -->
-                <div class="flex items-center gap-2">
-                    <button onclick="copyScheduleToClipboard()" title="Copy Routine to Clipboard" class="px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 border border-slate-300/90 dark:border-slate-800 text-slate-700 dark:text-slate-300 transition-all shadow-sm active:scale-95 flex items-center gap-2 text-xs sm:text-sm font-semibold">
-                        <i data-lucide="copy" class="w-4 h-4"></i>
-                        <span class="hidden sm:inline">Copy</span>
-                    </button>
-                    <button onclick="window.print()" title="Print Class Routine Sheet" class="px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 border border-slate-300/90 dark:border-slate-800 text-slate-700 dark:text-slate-300 transition-all shadow-sm active:scale-95 flex items-center gap-2 text-xs sm:text-sm font-semibold">
+                <!-- Print & Theme Buttons -->
+                <div class="flex items-center gap-1.5">
+                    <button onclick="window.print()" title="Print Master Timetable" class="px-3 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white transition-all shadow-sm active:scale-95 flex items-center gap-1.5 text-xs font-semibold">
                         <i data-lucide="printer" class="w-4 h-4"></i>
-                        <span class="hidden sm:inline">Print</span>
+                        <span>Print</span>
                     </button>
-                    <button id="theme-toggle" onclick="toggleTheme()" title="Toggle Light/Dark Mode" class="p-2.5 rounded-xl bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 border border-slate-300/90 dark:border-slate-800 text-slate-700 dark:text-slate-300 transition-all shadow-sm active:scale-95">
+                    <button id="theme-toggle" onclick="toggleTheme()" title="Toggle Light/Dark Mode" class="p-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 border border-slate-300/90 dark:border-slate-800 text-slate-700 dark:text-slate-300 transition-all shadow-sm active:scale-95">
                         <i id="theme-icon-sun" data-lucide="sun" class="w-4 h-4 hidden dark:block text-amber-400"></i>
                         <i id="theme-icon-moon" data-lucide="moon" class="w-4 h-4 block dark:hidden text-indigo-600"></i>
                     </button>
@@ -132,319 +129,171 @@
             </div>
         </header>
 
-        <!-- Compact Live Status & Next Class Countdown Strip -->
-        <section id="countdown-banner" class="no-print mt-5 rounded-2xl p-4 sm:p-5 bg-gradient-to-r from-indigo-600 via-blue-700 to-slate-900 text-white shadow-md border border-indigo-400/20 relative overflow-hidden">
-            <div class="relative z-10 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-                <!-- Left Info -->
-                <div class="space-y-1.5">
-                    <div class="flex flex-wrap items-center gap-2">
-                        <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-md bg-white/15 text-[11px] font-bold uppercase tracking-wider text-indigo-100 border border-white/15">
-                            <span id="banner-pulse" class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-                            <span id="banner-eyebrow">UPCOMING CLASS</span>
-                        </div>
-                        <span id="banner-mode-pill" class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-cyan-400/20 text-cyan-100 border border-cyan-300/30 text-[11px] font-bold uppercase tracking-wider">
-                            Online
-                        </span>
-                    </div>
-                    <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                        <h2 id="banner-title" class="text-lg sm:text-xl font-extrabold tracking-tight text-white">
-                            Calculating next session...
-                        </h2>
-                        <p id="banner-subtitle" class="text-indigo-100/90 text-xs sm:text-sm flex flex-wrap items-center gap-x-3 gap-y-1">
-                            <span>Loading schedule details...</span>
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Right Countdown Boxes -->
-                <div class="flex items-center shrink-0">
-                    <div id="countdown-boxes" class="grid grid-cols-4 gap-2 text-center w-full sm:w-auto">
-                        <div class="bg-slate-950/45 border border-white/10 rounded-xl px-3 py-1.5 min-w-[56px]">
-                            <div id="cd-days" class="font-mono text-base sm:text-lg font-bold text-white leading-tight">00</div>
-                            <div class="text-[9px] uppercase tracking-wider text-indigo-200">Days</div>
-                        </div>
-                        <div class="bg-slate-950/45 border border-white/10 rounded-xl px-3 py-1.5 min-w-[56px]">
-                            <div id="cd-hours" class="font-mono text-base sm:text-lg font-bold text-white leading-tight">00</div>
-                            <div class="text-[9px] uppercase tracking-wider text-indigo-200">Hrs</div>
-                        </div>
-                        <div class="bg-slate-950/45 border border-white/10 rounded-xl px-3 py-1.5 min-w-[56px]">
-                            <div id="cd-mins" class="font-mono text-base sm:text-lg font-bold text-white leading-tight">00</div>
-                            <div class="text-[9px] uppercase tracking-wider text-indigo-200">Min</div>
-                        </div>
-                        <div class="bg-slate-950/45 border border-white/10 rounded-xl px-3 py-1.5 min-w-[56px]">
-                            <div id="cd-secs" class="font-mono text-base sm:text-lg font-bold text-cyan-300 leading-tight">00</div>
-                            <div class="text-[9px] uppercase tracking-wider text-indigo-200">Sec</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Sheet Toolbar: Sheet Layout Switcher, Mode Filter & Day Filter -->
-        <section class="no-print mt-6 flex flex-col xl:flex-row xl:items-center justify-between gap-3">
-            <div class="flex flex-wrap items-center gap-3">
-                <!-- View Layout Toggle (Master Sheet vs Time-Matrix Grid) -->
-                <div class="inline-flex p-1 rounded-xl bg-slate-200/80 dark:bg-slate-900 border border-slate-300/80 dark:border-slate-800">
-                    <button onclick="setSheetView('SHEET')" id="view-btn-SHEET" class="view-tab px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all flex items-center gap-1.5 bg-white dark:bg-slate-800 text-indigo-600 dark:text-white shadow-sm">
-                        <i data-lucide="table" class="w-4 h-4"></i>
-                        <span>Master Sheet</span>
-                    </button>
-                    <button onclick="setSheetView('MATRIX')" id="view-btn-MATRIX" class="view-tab px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all flex items-center gap-1.5 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
-                        <i data-lucide="layout-grid" class="w-4 h-4"></i>
-                        <span>Time-Matrix Grid</span>
-                    </button>
-                </div>
-
-                <!-- Mode Switcher (All / Online / On-Campus) -->
-                <div class="inline-flex p-1 rounded-xl bg-slate-200/80 dark:bg-slate-900 border border-slate-300/80 dark:border-slate-800">
-                    <button onclick="setModeFilter('ALL')" id="mode-btn-ALL" class="mode-tab px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 bg-white dark:bg-slate-800 text-indigo-600 dark:text-white shadow-sm">
-                        <span>All</span>
-                    </button>
-                    <button onclick="setModeFilter('Online')" id="mode-btn-Online" class="mode-tab px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
-                        <i data-lucide="laptop" class="w-3.5 h-3.5"></i>
-                        <span>Online</span>
-                    </button>
-                    <button onclick="setModeFilter('On-Campus')" id="mode-btn-On-Campus" class="mode-tab px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
-                        <i data-lucide="building-2" class="w-3.5 h-3.5"></i>
-                        <span>On-Campus</span>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Day Filter Pills -->
-            <div id="day-filter-bar" class="flex items-center gap-1.5 overflow-x-auto pb-1 xl:pb-0">
-                <!-- Populated dynamically by JS -->
-            </div>
-        </section>
-
-        <!-- Primary Table Sheet Routine Container -->
-        <main id="routine-container" class="mt-4">
-            <!-- Dynamically rendered table sheet goes here -->
+        <!-- Single Master Timetable Matrix Container -->
+        <main id="routine-container" class="mt-6">
+            <!-- Dynamically rendered Master Timetable Matrix goes here -->
         </main>
 
-        <!-- Course & Room Quick Reference Strip -->
-        <section id="course-reference-strip" class="mt-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-300/90 dark:border-slate-800 shadow-sm overflow-hidden print-sheet">
-            <div class="px-4 py-3 bg-slate-100/90 dark:bg-slate-850 border-b border-slate-300/80 dark:border-slate-800 flex items-center justify-between">
-                <div class="flex items-center gap-2 text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
-                    <i data-lucide="book-open" class="w-4 h-4 text-indigo-600 dark:text-indigo-400"></i>
-                    <span>Course & Campus Room Directory — CSE 74D</span>
-                </div>
-                <span class="text-xs font-mono text-slate-500 dark:text-slate-400">4 Courses • 5 Weekly Slots</span>
-            </div>
-            <div id="course-directory-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-slate-200 dark:divide-slate-800">
-                <!-- Populated dynamically by JS -->
-            </div>
-        </section>
-
-        <!-- Footer -->
-        <footer class="mt-8 pt-5 border-t border-slate-300/80 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500 dark:text-slate-400">
-            <p>World University of Bangladesh (WUB) • Department of Computer Science & Engineering • Batch 74, Section D</p>
-            <p class="font-mono">Official Timetable Sheet • Online & On-Campus</p>
+        <!-- Minimal Footer -->
+        <footer class="mt-6 pt-4 border-t border-slate-300/80 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500 dark:text-slate-400">
+            <p>World University of Bangladesh (WUB) • Dept. of CSE • Batch 74, Section D</p>
+            <p class="font-mono">Rows: Days (Sun–Sat) • Columns: Chronological Time Slots</p>
         </footer>
     </div>
-
-    <!-- Custom Toast Notification Container -->
-    <div id="toast-container" class="no-print fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
     <!-- Application Logic -->
     <script>
         /**
-         * WUB CSE 74D Official Table Sheet Class Routine (Online & On-Campus)
-         * Includes assigned On-Campus room numbers and course codes.
+         * WUB CSE 74D Official Master Timetable Matrix
+         * Rows = Days of the week (Sunday through Saturday)
+         * Columns = Chronological time slots (On-Campus & Online)
          */
 
-        const STORAGE_KEY_THEME = 'wub_cse_74d_theme_v3';
+        const STORAGE_KEY_THEME = 'wub_cse_74d_theme_v4';
 
+        // Rows: Sunday through Saturday
         const DAYS_OF_WEEK = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-        const DISPLAY_DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+        // Columns: 7 Chronological Time Slots
+        const TIME_COLUMNS = [
+            { key: '08:45-09:30', startTime: '08:45', endTime: '09:30', label: '8:45 AM – 9:30 AM', modeLabel: 'On-Campus' },
+            { key: '11:00-11:45', startTime: '11:00', endTime: '11:45', label: '11:00 AM – 11:45 AM', modeLabel: 'On-Campus' },
+            { key: '12:30-13:05', startTime: '12:30', endTime: '13:05', label: '12:30 PM – 1:05 PM', modeLabel: 'On-Campus' },
+            { key: '14:20-15:05', startTime: '14:20', endTime: '15:05', label: '2:20 PM – 3:05 PM', modeLabel: 'On-Campus' },
+            { key: '15:00-15:45', startTime: '15:00', endTime: '15:45', label: '3:00 PM – 3:45 PM', modeLabel: 'On-Campus Lab' },
+            { key: '20:00-21:00', startTime: '20:00', endTime: '21:00', label: '8:00 PM – 9:00 PM', modeLabel: 'Online' },
+            { key: '21:00-22:00', startTime: '21:00', endTime: '22:00', label: '9:00 PM – 10:00 PM', modeLabel: 'Online' }
+        ];
 
         // Official Complete Weekly Routine for WUB CSE 74D
         const SCHEDULE_DATA = [
             // Monday — Online
             {
                 id: 'mon-comm',
-                courseCode: 'CSE_ENG 02311216',
                 subject: 'Professional Communication',
                 day: 'Monday',
-                startTime: '20:00', // 8:00 PM
-                endTime: '21:00',   // 9:00 PM
+                startTime: '20:00',
+                endTime: '21:00',
                 mode: 'Online',
-                type: 'Theory',
                 room: 'Online',
                 color: 'indigo'
             },
             {
                 id: 'mon-phy1',
-                courseCode: 'CSE_PHY 05331104',
                 subject: 'Physics 1',
                 day: 'Monday',
-                startTime: '21:00', // 9:00 PM
-                endTime: '22:00',   // 10:00 PM
+                startTime: '21:00',
+                endTime: '22:00',
                 mode: 'Online',
-                type: 'Theory',
                 room: 'Online',
                 color: 'blue'
             },
             // Tuesday — Online
             {
                 id: 'tue-dm',
-                courseCode: 'CSE_MAT 06882124',
                 subject: 'Discrete Mathematics',
                 day: 'Tuesday',
-                startTime: '20:00', // 8:00 PM
-                endTime: '21:00',   // 9:00 PM
+                startTime: '20:00',
+                endTime: '21:00',
                 mode: 'Online',
-                type: 'Theory',
                 room: 'Online',
                 color: 'purple'
             },
             {
                 id: 'tue-prog',
-                courseCode: 'CSE_CSE 06131209',
                 subject: 'Introduction to Programming',
                 day: 'Tuesday',
-                startTime: '21:00', // 9:00 PM
-                endTime: '22:00',   // 10:00 PM
+                startTime: '21:00',
+                endTime: '22:00',
                 mode: 'Online',
-                type: 'Theory',
                 room: 'Online',
                 color: 'cyan'
             },
             // Friday — On-Campus
             {
                 id: 'fri-dm',
-                courseCode: 'CSE_MAT 06882124',
                 subject: 'Discrete Mathematics',
                 day: 'Friday',
-                startTime: '08:45', // 8:45 AM
-                endTime: '09:30',   // 9:30 AM
+                startTime: '08:45',
+                endTime: '09:30',
                 mode: 'On-Campus',
-                type: 'Theory',
-                room: '307',
+                room: 'Room 307',
                 color: 'purple'
             },
             {
                 id: 'fri-prog',
-                courseCode: 'CSE_CSE 06131209',
                 subject: 'Introduction to Programming',
                 day: 'Friday',
-                startTime: '11:00', // 11:00 AM
-                endTime: '11:45',   // 11:45 AM
+                startTime: '11:00',
+                endTime: '11:45',
                 mode: 'On-Campus',
-                type: 'Theory',
-                room: '403',
+                room: 'Room 403',
                 color: 'cyan'
             },
             {
                 id: 'fri-phy1',
-                courseCode: 'CSE_PHY 05331104',
                 subject: 'Physics 1',
                 day: 'Friday',
-                startTime: '12:30', // 12:30 PM
-                endTime: '13:05',   // 1:05 PM
+                startTime: '12:30',
+                endTime: '13:05',
                 mode: 'On-Campus',
-                type: 'Theory',
-                room: '402',
+                room: 'Room 402',
                 color: 'blue'
             },
             {
                 id: 'fri-comm',
-                courseCode: 'CSE_ENG 02311216',
                 subject: 'Professional Communication',
                 day: 'Friday',
-                startTime: '14:20', // 2:20 PM
-                endTime: '15:05',   // 3:05 PM
+                startTime: '14:20',
+                endTime: '15:05',
                 mode: 'On-Campus',
-                type: 'Theory',
-                room: '402',
+                room: 'Room 402',
                 color: 'indigo'
             },
             // Saturday — On-Campus Lab
             {
                 id: 'sat-prog-lab',
-                courseCode: 'CSE_CSE 06131209 Lab',
                 subject: 'Introduction to Programming Lab',
                 day: 'Saturday',
-                startTime: '15:00', // 3:00 PM
-                endTime: '15:45',   // 3:45 PM
+                startTime: '15:00',
+                endTime: '15:45',
                 mode: 'On-Campus',
-                type: 'Lab Class',
-                room: '201',
+                room: 'Room 201',
                 color: 'amber'
             }
         ];
 
-        // Course Reference Directory
-        const COURSE_DIRECTORY = [
-            {
-                code: 'CSE_MAT 06882124',
-                title: 'Discrete Mathematics',
-                campusRoom: 'Room 307',
-                color: 'purple'
-            },
-            {
-                code: 'CSE_CSE 06131209',
-                title: 'Introduction to Programming',
-                campusRoom: 'Room 403 (Theory) • Room 201 (Lab)',
-                color: 'cyan'
-            },
-            {
-                code: 'CSE_PHY 05331104',
-                title: 'Physics 1',
-                campusRoom: 'Room 402',
-                color: 'blue'
-            },
-            {
-                code: 'CSE_ENG 02311216',
-                title: 'Professional Communication',
-                campusRoom: 'Room 402',
-                color: 'indigo'
-            }
-        ];
-
-        // Distinct Subject Color Accents
+        // Subtle Cell Accents
         const SUBJECT_ACCENTS = {
             blue: {
                 dot: 'bg-blue-500',
-                pill: 'bg-blue-500/10 text-blue-700 dark:text-blue-300 border-blue-500/25',
-                cellBg: 'bg-blue-50/70 dark:bg-blue-950/25 border-blue-200 dark:border-blue-800/60'
+                cellBg: 'bg-blue-50/80 dark:bg-blue-950/30 border-blue-300/80 dark:border-blue-800/70'
             },
             purple: {
                 dot: 'bg-purple-500',
-                pill: 'bg-purple-500/10 text-purple-700 dark:text-purple-300 border-purple-500/25',
-                cellBg: 'bg-purple-50/70 dark:bg-purple-950/25 border-purple-200 dark:border-purple-800/60'
+                cellBg: 'bg-purple-50/80 dark:bg-purple-950/30 border-purple-300/80 dark:border-purple-800/70'
             },
             cyan: {
                 dot: 'bg-cyan-500',
-                pill: 'bg-cyan-500/10 text-cyan-700 dark:text-cyan-300 border-cyan-500/25',
-                cellBg: 'bg-cyan-50/70 dark:bg-cyan-950/25 border-cyan-200 dark:border-cyan-800/60'
+                cellBg: 'bg-cyan-50/80 dark:bg-cyan-950/30 border-cyan-300/80 dark:border-cyan-800/70'
             },
             indigo: {
                 dot: 'bg-indigo-500',
-                pill: 'bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 border-indigo-500/25',
-                cellBg: 'bg-indigo-50/70 dark:bg-indigo-950/25 border-indigo-200 dark:border-indigo-800/60'
+                cellBg: 'bg-indigo-50/80 dark:bg-indigo-950/30 border-indigo-300/80 dark:border-indigo-800/70'
             },
             amber: {
                 dot: 'bg-amber-500',
-                pill: 'bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-500/25',
-                cellBg: 'bg-amber-50/70 dark:bg-amber-950/25 border-amber-200 dark:border-amber-800/60'
+                cellBg: 'bg-amber-50/80 dark:bg-amber-950/30 border-amber-300/80 dark:border-amber-800/70'
             }
         };
-
-        // App View & Filter State
-        let selectedSheetView = 'SHEET'; // 'SHEET' | 'MATRIX'
-        let selectedModeFilter = 'ALL';  // 'ALL' | 'Online' | 'On-Campus'
-        let selectedDayFilter = 'ALL';   // 'ALL' | 'TODAY' | day name
 
         // ==========================================
         // INITIALIZATION
         // ==========================================
         document.addEventListener('DOMContentLoaded', () => {
             initTheme();
-            renderDayFilterPills();
-            renderCourseDirectory();
-            renderRoutine();
-            startLiveClockAndCountdown();
+            renderMasterTable();
+            startLiveClockAndStatus();
             lucide.createIcons();
         });
 
@@ -465,7 +314,7 @@
         }
 
         // ==========================================
-        // TIME & SCHEDULE ENGINE (Asia/Dhaka aware)
+        // TIME & SCHEDULE ENGINE (Asia/Dhaka)
         // ==========================================
         function getDhakaNow() {
             const now = new Date();
@@ -509,13 +358,10 @@
                 const startMin = parseTimeToMinutes(cls.startTime);
                 const endMin = parseTimeToMinutes(cls.endTime);
                 if (currentMinutes >= startMin && currentMinutes < endMin) {
-                    const endTarget = new Date(now);
-                    endTarget.setHours(Math.floor(endMin / 60), endMin % 60, 0, 0);
                     return {
                         state: 'LIVE',
                         targetClass: cls,
-                        targetDate: endTarget,
-                        todaysClasses
+                        dayDiff: 0
                     };
                 }
             }
@@ -542,26 +388,20 @@
                 const diffMs = candidateDate.getTime() - now.getTime();
                 if (diffMs > 0 && diffMs < bestDiffMs) {
                     bestDiffMs = diffMs;
-                    bestCandidate = {
-                        cls,
-                        targetDate: candidateDate,
-                        dayDiff
-                    };
+                    bestCandidate = { cls, dayDiff };
                 }
             }
 
             return {
                 state: bestCandidate ? (bestCandidate.dayDiff === 0 ? 'UPCOMING_TODAY' : 'UPCOMING_FUTURE') : 'EMPTY',
                 targetClass: bestCandidate ? bestCandidate.cls : null,
-                targetDate: bestCandidate ? bestCandidate.targetDate : null,
-                dayDiff: bestCandidate ? bestCandidate.dayDiff : null,
-                todaysClasses
+                dayDiff: bestCandidate ? bestCandidate.dayDiff : null
             };
         }
 
-        let lastHighlightedClassId = null;
+        let lastHighlightedStateKey = null;
 
-        function startLiveClockAndCountdown() {
+        function startLiveClockAndStatus() {
             const update = () => {
                 const now = getDhakaNow();
 
@@ -579,19 +419,17 @@
                     dateEl.textContent = now.toLocaleDateString('en-US', {
                         weekday: 'short',
                         month: 'short',
-                        day: 'numeric',
-                        year: 'numeric'
+                        day: 'numeric'
                     });
                 }
 
                 const status = evaluateScheduleStatus(now);
-                updateHeaderStatusBadge(status);
-                updateCountdownBanner(status, now);
+                updateMinimalStatusPill(status);
 
-                const currentTargetId = status.targetClass ? status.targetClass.id : null;
-                if (currentTargetId !== lastHighlightedClassId) {
-                    lastHighlightedClassId = currentTargetId;
-                    renderRoutine();
+                const stateKey = `${getTodayName(now)}-${status.state}-${status.targetClass ? status.targetClass.id : 'none'}`;
+                if (stateKey !== lastHighlightedStateKey) {
+                    lastHighlightedStateKey = stateKey;
+                    renderMasterTable();
                 }
             };
 
@@ -599,209 +437,33 @@
             setInterval(update, 1000);
         }
 
-        function updateHeaderStatusBadge(status) {
-            const badge = document.getElementById('header-status-badge');
-            if (!badge) return;
-
-            if (status.state === 'LIVE') {
-                badge.className = 'flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30';
-                badge.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span><span>Live Class</span>`;
-            } else if (status.state === 'UPCOMING_TODAY') {
-                badge.className = 'flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30';
-                badge.innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-500"></span><span>Class Today</span>`;
-            } else if (status.todaysClasses && status.todaysClasses.length > 0) {
-                badge.className = 'flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 border border-indigo-500/30';
-                badge.innerHTML = `<span class="w-2 h-2 rounded-full bg-indigo-500"></span><span>Done Today</span>`;
-            } else {
-                badge.className = 'flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400';
-                badge.innerHTML = `<span class="w-2 h-2 rounded-full bg-slate-400"></span><span>Off Day</span>`;
-            }
-        }
-
-        function updateCountdownBanner(status, now) {
-            const eyebrowEl = document.getElementById('banner-eyebrow');
-            const modePillEl = document.getElementById('banner-mode-pill');
-            const titleEl = document.getElementById('banner-title');
-            const subEl = document.getElementById('banner-subtitle');
-            const pulseEl = document.getElementById('banner-pulse');
-            const bannerEl = document.getElementById('countdown-banner');
-
-            if (!status.targetClass || !status.targetDate) return;
+        function updateMinimalStatusPill(status) {
+            const pill = document.getElementById('next-class-pill');
+            const dot = document.getElementById('status-dot');
+            const text = document.getElementById('next-class-text');
+            if (!pill || !dot || !text || !status.targetClass) return;
 
             const cls = status.targetClass;
-            const timeRange = `${formatTime12h(cls.startTime)} – ${formatTime12h(cls.endTime)}`;
-            const isOnline = cls.mode === 'Online';
-            const roomText = isOnline ? 'Online' : `Room ${cls.room}`;
-
-            modePillEl.textContent = `${cls.mode} • ${roomText}`;
-            modePillEl.className = isOnline
-                ? 'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-cyan-400/20 text-cyan-100 border border-cyan-300/30 text-[11px] font-bold uppercase tracking-wider'
-                : 'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-emerald-400/20 text-emerald-100 border border-emerald-300/30 text-[11px] font-bold uppercase tracking-wider';
+            const startStr = formatTime12h(cls.startTime);
 
             if (status.state === 'LIVE') {
-                bannerEl.className = 'no-print mt-5 rounded-2xl p-4 sm:p-5 bg-gradient-to-r from-emerald-600 via-teal-700 to-slate-900 text-white shadow-md border border-emerald-400/30 relative overflow-hidden';
-                pulseEl.className = 'w-2 h-2 rounded-full bg-white animate-ping';
-                eyebrowEl.textContent = 'LIVE NOW • ENDS IN';
-                titleEl.textContent = `${cls.subject} (${cls.courseCode})`;
-                subEl.innerHTML = `
-                    <span class="inline-flex items-center gap-1"><i data-lucide="calendar" class="w-3.5 h-3.5"></i> Today (${cls.day})</span>
-                    <span class="inline-flex items-center gap-1"><i data-lucide="clock" class="w-3.5 h-3.5"></i> ${timeRange}</span>
-                    <span class="inline-flex items-center gap-1 font-semibold"><i data-lucide="map-pin" class="w-3.5 h-3.5"></i> ${roomText}</span>
-                `;
+                pill.className = 'flex items-center gap-2 px-3 py-2 rounded-xl bg-emerald-500/15 border border-emerald-500/35 text-xs';
+                dot.className = 'w-2 h-2 rounded-full bg-emerald-500 animate-ping shrink-0';
+                text.className = 'font-bold text-emerald-700 dark:text-emerald-300';
+                text.textContent = `LIVE: ${cls.subject} (${cls.room})`;
             } else {
-                bannerEl.className = isOnline
-                    ? 'no-print mt-5 rounded-2xl p-4 sm:p-5 bg-gradient-to-r from-indigo-600 via-blue-700 to-slate-900 text-white shadow-md border border-indigo-400/20 relative overflow-hidden'
-                    : 'no-print mt-5 rounded-2xl p-4 sm:p-5 bg-gradient-to-r from-teal-700 via-emerald-800 to-slate-900 text-white shadow-md border border-emerald-400/20 relative overflow-hidden';
-                pulseEl.className = 'w-2 h-2 rounded-full bg-cyan-300 animate-pulse';
-                eyebrowEl.textContent = status.dayDiff === 0 ? 'UPCOMING TODAY' : `NEXT CLASS • ${cls.day.toUpperCase()}`;
-                titleEl.textContent = `${cls.subject} (${cls.courseCode})`;
-                subEl.innerHTML = `
-                    <span class="inline-flex items-center gap-1"><i data-lucide="calendar" class="w-3.5 h-3.5"></i> ${status.dayDiff === 0 ? 'Today, ' : ''}${cls.day}</span>
-                    <span class="inline-flex items-center gap-1"><i data-lucide="clock" class="w-3.5 h-3.5"></i> ${timeRange}</span>
-                    <span class="inline-flex items-center gap-1 font-semibold"><i data-lucide="map-pin" class="w-3.5 h-3.5"></i> ${roomText}</span>
-                `;
+                const dayLabel = status.dayDiff === 0 ? 'Today' : cls.day.slice(0, 3);
+                pill.className = 'flex items-center gap-2 px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-300/90 dark:border-slate-800 shadow-sm text-xs';
+                dot.className = 'w-2 h-2 rounded-full bg-indigo-500 shrink-0';
+                text.className = 'font-semibold text-slate-700 dark:text-slate-200';
+                text.textContent = `Next: ${cls.subject} • ${dayLabel} ${startStr} (${cls.room})`;
             }
-
-            const diffMs = Math.max(0, status.targetDate.getTime() - now.getTime());
-            const totalSecs = Math.floor(diffMs / 1000);
-            const days = Math.floor(totalSecs / 86400);
-            const hours = Math.floor((totalSecs % 86400) / 3600);
-            const mins = Math.floor((totalSecs % 3600) / 60);
-            const secs = totalSecs % 60;
-
-            document.getElementById('cd-days').textContent = String(days).padStart(2, '0');
-            document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
-            document.getElementById('cd-mins').textContent = String(mins).padStart(2, '0');
-            document.getElementById('cd-secs').textContent = String(secs).padStart(2, '0');
-            lucide.createIcons();
         }
 
         // ==========================================
-        // FILTERING & VIEW SWITCHING
+        // SINGLE MASTER TIMETABLE MATRIX RENDERER
         // ==========================================
-        function setSheetView(view) {
-            selectedSheetView = view;
-            document.querySelectorAll('.view-tab').forEach(btn => {
-                btn.className = 'view-tab px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all flex items-center gap-1.5 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white';
-            });
-            const activeBtn = document.getElementById(`view-btn-${view}`);
-            if (activeBtn) {
-                activeBtn.className = 'view-tab px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all flex items-center gap-1.5 bg-white dark:bg-slate-800 text-indigo-600 dark:text-white shadow-sm';
-            }
-            renderRoutine();
-        }
-
-        function setModeFilter(mode) {
-            selectedModeFilter = mode;
-            document.querySelectorAll('.mode-tab').forEach(btn => {
-                btn.className = 'mode-tab px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white';
-            });
-            const activeBtn = document.getElementById(`mode-btn-${mode}`);
-            if (activeBtn) {
-                activeBtn.className = 'mode-tab px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 bg-white dark:bg-slate-800 text-indigo-600 dark:text-white shadow-sm';
-            }
-            renderDayFilterPills();
-            renderRoutine();
-        }
-
-        function setDayFilter(day) {
-            selectedDayFilter = day;
-            renderDayFilterPills();
-            renderRoutine();
-        }
-
-        function getFilteredClasses() {
-            return SCHEDULE_DATA.filter(cls => {
-                if (selectedModeFilter !== 'ALL' && cls.mode !== selectedModeFilter) {
-                    return false;
-                }
-                return true;
-            });
-        }
-
-        function renderDayFilterPills() {
-            const container = document.getElementById('day-filter-bar');
-            const today = getTodayName();
-            const filteredByMode = getFilteredClasses();
-            const pills = ['ALL', 'TODAY', ...DISPLAY_DAYS];
-
-            container.innerHTML = pills.map(pill => {
-                const isSelected = selectedDayFilter === pill;
-                const targetDay = pill === 'TODAY' ? today : pill;
-                const isTodayPill = pill === 'TODAY' || pill === today;
-                const hasClasses = pill === 'ALL' || filteredByMode.some(c => c.day === targetDay);
-
-                let label = pill;
-                if (pill === 'ALL') label = 'All Days';
-                else if (pill === 'TODAY') label = `Today (${today.slice(0, 3)})`;
-                else label = pill.slice(0, 3);
-
-                let baseClass = 'px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap flex items-center gap-1.5 border ';
-                if (isSelected) {
-                    baseClass += 'bg-indigo-600 text-white border-indigo-600 shadow-sm';
-                } else {
-                    baseClass += 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border-slate-300/80 dark:border-slate-800 hover:border-indigo-400/60';
-                }
-
-                return `
-                    <button onclick="setDayFilter('${pill}')" class="${baseClass}">
-                        <span>${label}</span>
-                        ${isTodayPill && pill !== 'TODAY' ? `<span class="w-1.5 h-1.5 rounded-full ${isSelected ? 'bg-white' : 'bg-indigo-500'}" title="Today"></span>` : ''}
-                        ${!hasClasses && pill !== 'ALL' && pill !== 'TODAY' ? `<span class="text-[10px] opacity-60">(Off)</span>` : ''}
-                    </button>
-                `;
-            }).join('');
-        }
-
-        function renderCourseDirectory() {
-            const grid = document.getElementById('course-directory-grid');
-            if (!grid) return;
-
-            grid.innerHTML = COURSE_DIRECTORY.map(item => {
-                const accent = SUBJECT_ACCENTS[item.color] || SUBJECT_ACCENTS.blue;
-                return `
-                    <div class="p-4 flex flex-col justify-between gap-2 hover:bg-slate-50/80 dark:hover:bg-slate-850/60 transition-colors">
-                        <div>
-                            <div class="flex items-center gap-2">
-                                <span class="w-2.5 h-2.5 rounded-full ${accent.dot} shrink-0"></span>
-                                <span class="font-mono text-xs font-semibold text-slate-500 dark:text-slate-400">${item.code}</span>
-                            </div>
-                            <h4 class="text-sm font-bold text-slate-900 dark:text-white mt-1">${item.title}</h4>
-                        </div>
-                        <div class="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-1 rounded-md self-start">
-                            <i data-lucide="door-open" class="w-3.5 h-3.5"></i>
-                            <span>${item.campusRoom}</span>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        // ==========================================
-        // TABLE SHEET & TIME-MATRIX RENDERING
-        // ==========================================
-        function renderRoutine() {
-            if (selectedSheetView === 'MATRIX') {
-                renderMatrixGridView();
-            } else {
-                renderMasterSheetView();
-            }
-            lucide.createIcons();
-        }
-
-        function getDaysToDisplay(filteredClasses, today) {
-            if (selectedDayFilter === 'TODAY') {
-                return [today];
-            } else if (selectedDayFilter !== 'ALL') {
-                return [selectedDayFilter];
-            } else if (selectedModeFilter !== 'ALL') {
-                return DISPLAY_DAYS.filter(d => filteredClasses.some(c => c.day === d));
-            }
-            return DISPLAY_DAYS;
-        }
-
-        // 1. Primary Spreadsheet-Style Master Routine Table
-        function renderMasterSheetView() {
+        function renderMasterTable() {
             const container = document.getElementById('routine-container');
             const now = getDhakaNow();
             const today = getTodayName(now);
@@ -809,263 +471,111 @@
             const activeClassId = status.targetClass ? status.targetClass.id : null;
             const activeState = status.state;
 
-            const filteredClasses = getFilteredClasses();
-            const daysToRender = getDaysToDisplay(filteredClasses, today);
+            // Header Columns (7 chronological time slots)
+            const headerColsHTML = TIME_COLUMNS.map(col => {
+                const isOnlineSlot = col.modeLabel === 'Online';
+                return `
+                    <th class="px-3 py-3 border-r border-slate-300 dark:border-slate-700 last:border-r-0 min-w-[165px] text-center align-middle">
+                        <div class="font-mono text-xs font-extrabold text-slate-900 dark:text-white tracking-tight">
+                            ${col.label}
+                        </div>
+                        <div class="mt-1 inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ${isOnlineSlot ? 'bg-cyan-500/15 text-cyan-700 dark:text-cyan-300' : 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300'}">
+                            ${col.modeLabel}
+                        </div>
+                    </th>
+                `;
+            }).join('');
 
-            let tableRowsHTML = '';
-
-            daysToRender.forEach(day => {
-                const dayClasses = filteredClasses
-                    .filter(c => c.day === day)
-                    .sort((a, b) => parseTimeToMinutes(a.startTime) - parseTimeToMinutes(b.startTime));
+            // Rows: Sunday through Saturday
+            const rowsHTML = DAYS_OF_WEEK.map(day => {
                 const isToday = day === today;
+                const dayClasses = SCHEDULE_DATA.filter(c => c.day === day);
+                const isOffDay = dayClasses.length === 0;
 
-                if (dayClasses.length === 0) {
-                    // Off-day single merged row
-                    tableRowsHTML += `
-                        <tr class="${isToday ? 'bg-indigo-50/60 dark:bg-indigo-950/20' : 'bg-slate-50/50 dark:bg-slate-900/40'} border-b border-slate-300 dark:border-slate-800">
-                            <td class="px-4 py-3.5 border-r border-slate-300 dark:border-slate-800 font-bold text-slate-800 dark:text-slate-200 align-middle whitespace-nowrap ${isToday ? 'border-l-4 border-l-indigo-600' : ''}">
-                                <div class="flex items-center gap-2">
-                                    <span>${day}</span>
-                                    ${isToday ? `<span class="px-1.5 py-0.5 text-[10px] font-extrabold rounded bg-indigo-600 text-white">TODAY</span>` : ''}
-                                </div>
-                            </td>
-                            <td colspan="4" class="px-4 py-3.5 text-xs sm:text-sm italic text-slate-400 dark:text-slate-500">
+                // Determine Day Mode Badge
+                let dayModeBadge = '';
+                if (isOffDay) {
+                    dayModeBadge = `<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold bg-slate-200/80 dark:bg-slate-800 text-slate-500 dark:text-slate-400">Off Day</span>`;
+                } else {
+                    const isOnlineDay = dayClasses[0].mode === 'Online';
+                    dayModeBadge = isOnlineDay
+                        ? `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold bg-cyan-500/15 text-cyan-700 dark:text-cyan-300 border border-cyan-500/25">Online</span>`
+                        : `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/25">On-Campus</span>`;
+                }
+
+                // Sticky Day Cell
+                const stickyDayCell = `
+                    <td class="sticky left-0 z-10 px-4 py-3.5 border-r-2 border-slate-300 dark:border-slate-700 whitespace-nowrap align-middle ${isToday ? 'bg-indigo-50 dark:bg-slate-850 border-l-4 border-l-indigo-600' : 'bg-slate-50 dark:bg-slate-900'}">
+                        <div class="flex flex-col gap-1.5">
+                            <div class="flex items-center gap-2">
+                                <span class="text-sm font-extrabold ${isOffDay ? 'text-slate-500 dark:text-slate-400' : 'text-slate-900 dark:text-white'}">${day}</span>
+                                ${isToday ? `<span class="px-1.5 py-0.5 text-[9px] font-extrabold rounded bg-indigo-600 text-white tracking-wide">TODAY</span>` : ''}
+                            </div>
+                            <div>${dayModeBadge}</div>
+                        </div>
+                    </td>
+                `;
+
+                // Off Day Row (spanned across all 7 time columns cleanly)
+                if (isOffDay) {
+                    return `
+                        <tr class="border-b border-slate-300 dark:border-slate-800 ${isToday ? 'bg-indigo-50/40 dark:bg-indigo-950/15' : 'bg-slate-50/60 dark:bg-slate-900/40'}">
+                            ${stickyDayCell}
+                            <td colspan="${TIME_COLUMNS.length}" class="px-4 py-3.5 text-center text-xs font-medium italic text-slate-400 dark:text-slate-500 tracking-wide">
                                 Off Day — No Classes Scheduled
                             </td>
                         </tr>
                     `;
-                } else {
-                    dayClasses.forEach((cls, idx) => {
-                        const isFirstOfDay = idx === 0;
-                        const isLastOfDay = idx === dayClasses.length - 1;
-                        const accent = SUBJECT_ACCENTS[cls.color] || SUBJECT_ACCENTS.blue;
-                        const isOnline = cls.mode === 'Online';
-                        const isLab = cls.type === 'Lab Class';
-                        const timeStr = `${formatTime12h(cls.startTime)} – ${formatTime12h(cls.endTime)}`;
-
-                        const isHighlighted = cls.id === activeClassId;
-                        let rowBgClass = isToday
-                            ? 'bg-indigo-50/45 dark:bg-indigo-950/20 hover:bg-indigo-50/80 dark:hover:bg-indigo-950/35'
-                            : 'bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-850/80';
-
-                        let statusBadge = '';
-                        if (isHighlighted && activeState === 'LIVE') {
-                            rowBgClass = 'bg-emerald-50/90 dark:bg-emerald-950/35 hover:bg-emerald-100/70 dark:hover:bg-emerald-950/50';
-                            statusBadge = `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-extrabold bg-emerald-600 text-white animate-pulse">LIVE NOW</span>`;
-                        } else if (isHighlighted && (activeState === 'UPCOMING_TODAY' || activeState === 'UPCOMING_FUTURE')) {
-                            statusBadge = `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-600/15 text-indigo-700 dark:text-indigo-300 border border-indigo-500/30">NEXT</span>`;
-                        }
-
-                        const rowBorderBottom = isLastOfDay
-                            ? 'border-b-2 border-slate-300 dark:border-slate-700'
-                            : 'border-b border-slate-200 dark:border-slate-800';
-
-                        tableRowsHTML += `
-                            <tr class="${rowBgClass} ${rowBorderBottom} transition-colors">
-                                ${isFirstOfDay ? `
-                                    <td rowspan="${dayClasses.length}" class="px-4 py-3.5 border-r border-slate-300 dark:border-slate-800 align-top font-bold text-slate-900 dark:text-white bg-slate-50/80 dark:bg-slate-900/90 whitespace-nowrap ${isToday ? 'border-l-4 border-l-indigo-600' : ''}">
-                                        <div class="flex flex-col gap-1.5">
-                                            <div class="flex items-center gap-2">
-                                                <span class="text-sm sm:text-base">${day}</span>
-                                                ${isToday ? `<span class="px-1.5 py-0.5 text-[10px] font-extrabold rounded bg-indigo-600 text-white">TODAY</span>` : ''}
-                                            </div>
-                                            <span class="text-[11px] font-medium text-slate-500 dark:text-slate-400">
-                                                ${dayClasses.length} ${dayClasses.length === 1 ? 'Class' : 'Classes'}
-                                            </span>
-                                        </div>
-                                    </td>
-                                ` : ''}
-
-                                <!-- Mode Cell -->
-                                <td class="px-4 py-3.5 border-r border-slate-200 dark:border-slate-800 whitespace-nowrap">
-                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-bold border ${isOnline ? 'bg-cyan-500/10 text-cyan-700 dark:text-cyan-300 border-cyan-500/30' : 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-500/30'}">
-                                        <i data-lucide="${isOnline ? 'laptop' : 'building-2'}" class="w-3.5 h-3.5"></i>
-                                        <span>${cls.mode}</span>
-                                    </span>
-                                </td>
-
-                                <!-- Time Slot Cell -->
-                                <td class="px-4 py-3.5 border-r border-slate-200 dark:border-slate-800 whitespace-nowrap font-mono text-xs sm:text-sm font-semibold text-slate-800 dark:text-slate-200">
-                                    <div class="flex items-center gap-2">
-                                        <i data-lucide="clock" class="w-3.5 h-3.5 text-slate-400 shrink-0"></i>
-                                        <span>${timeStr}</span>
-                                    </div>
-                                </td>
-
-                                <!-- Course Title & Code Cell -->
-                                <td class="px-4 py-3.5 border-r border-slate-200 dark:border-slate-800">
-                                    <div class="flex flex-wrap items-center justify-between gap-2">
-                                        <div class="flex items-start gap-2.5">
-                                            <span class="w-2.5 h-2.5 rounded-full ${accent.dot} mt-1.5 shrink-0"></span>
-                                            <div>
-                                                <div class="font-bold text-sm sm:text-base text-slate-900 dark:text-white leading-snug">
-                                                    ${cls.subject}
-                                                </div>
-                                                <div class="flex flex-wrap items-center gap-2 mt-0.5">
-                                                    <span class="font-mono text-xs text-slate-500 dark:text-slate-400">${cls.courseCode}</span>
-                                                    <span class="px-1.5 py-0.2 rounded text-[10px] font-semibold ${isLab ? 'bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/30' : 'bg-slate-200/70 dark:bg-slate-800 text-slate-600 dark:text-slate-400'}">
-                                                        ${cls.type}
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        ${statusBadge}
-                                    </div>
-                                </td>
-
-                                <!-- Room / Venue Cell -->
-                                <td class="px-4 py-3.5 whitespace-nowrap">
-                                    ${isOnline ? `
-                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
-                                            <i data-lucide="wifi" class="w-3.5 h-3.5 text-cyan-500"></i>
-                                            <span>Online</span>
-                                        </span>
-                                    ` : `
-                                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs sm:text-sm font-extrabold bg-emerald-600/15 text-emerald-800 dark:text-emerald-300 border border-emerald-500/40 font-mono">
-                                            <i data-lucide="door-open" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400"></i>
-                                            <span>Room ${cls.room}</span>
-                                        </span>
-                                    `}
-                                </td>
-                            </tr>
-                        `;
-                    });
-                }
-            });
-
-            container.innerHTML = `
-                <div class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 shadow-sm overflow-hidden print-sheet">
-                    <!-- Spreadsheet Sheet Title Bar -->
-                    <div class="px-4 py-3 bg-slate-100 dark:bg-slate-850 border-b border-slate-300 dark:border-slate-800 flex flex-wrap items-center justify-between gap-2">
-                        <div class="flex items-center gap-2">
-                            <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-indigo-600 text-white">SHEET 1</span>
-                            <h3 class="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200">
-                                Master Weekly Routine — WUB CSE 74D
-                            </h3>
-                        </div>
-                        <span class="text-xs text-slate-500 dark:text-slate-400 font-mono">
-                            Scroll horizontally on small screens →
-                        </span>
-                    </div>
-
-                    <!-- Responsive Table Sheet Wrapper -->
-                    <div class="overflow-x-auto sheet-scroll">
-                        <table class="w-full text-left border-collapse min-w-[740px]">
-                            <thead>
-                                <tr class="bg-slate-200/80 dark:bg-slate-800/90 text-slate-700 dark:text-slate-200 text-xs font-extrabold uppercase tracking-wider border-b-2 border-slate-300 dark:border-slate-700">
-                                    <th class="px-4 py-3 border-r border-slate-300 dark:border-slate-700 w-36">Day</th>
-                                    <th class="px-4 py-3 border-r border-slate-300 dark:border-slate-700 w-36">Mode</th>
-                                    <th class="px-4 py-3 border-r border-slate-300 dark:border-slate-700 w-48">Time Slot</th>
-                                    <th class="px-4 py-3 border-r border-slate-300 dark:border-slate-700">Course Title & Code</th>
-                                    <th class="px-4 py-3 w-36">Room / Venue</th>
-                                </tr>
-                            </thead>
-                            <tbody class="text-sm">
-                                ${tableRowsHTML}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            `;
-        }
-
-        // 2. Classic University Time-Matrix Grid (Days as Rows vs Time Slots as Columns)
-        function renderMatrixGridView() {
-            const container = document.getElementById('routine-container');
-            const now = getDhakaNow();
-            const today = getTodayName(now);
-            const status = evaluateScheduleStatus(now);
-            const activeClassId = status.targetClass ? status.targetClass.id : null;
-            const activeState = status.state;
-
-            const filteredClasses = getFilteredClasses();
-            const daysToRender = getDaysToDisplay(filteredClasses, today);
-
-            // Unique chronological time slots across filtered classes
-            const uniqueSlotsMap = new Map();
-            filteredClasses.forEach(c => {
-                const key = `${c.startTime}-${c.endTime}`;
-                if (!uniqueSlotsMap.has(key)) {
-                    uniqueSlotsMap.set(key, {
-                        key,
-                        startTime: c.startTime,
-                        endTime: c.endTime,
-                        label: `${formatTime12h(c.startTime)} – ${formatTime12h(c.endTime)}`,
-                        mode: c.mode
-                    });
-                }
-            });
-
-            const timeColumns = Array.from(uniqueSlotsMap.values()).sort(
-                (a, b) => parseTimeToMinutes(a.startTime) - parseTimeToMinutes(b.startTime)
-            );
-
-            const headerColsHTML = timeColumns.map(col => `
-                <th class="px-3 py-3 border-r border-slate-300 dark:border-slate-700 min-w-[185px] text-center">
-                    <div class="font-mono text-xs font-bold text-slate-900 dark:text-white">${col.label}</div>
-                    <div class="text-[10px] font-semibold mt-0.5 ${col.mode === 'Online' ? 'text-cyan-600 dark:text-cyan-400' : 'text-emerald-600 dark:text-emerald-400'}">
-                        ${col.mode} Slot
-                    </div>
-                </th>
-            `).join('');
-
-            const matrixRowsHTML = daysToRender.map(day => {
-                const isToday = day === today;
-                const dayClasses = filteredClasses.filter(c => c.day === day);
-
-                if (dayClasses.length === 0) {
-                    return `
-                        <tr class="border-b border-slate-300 dark:border-slate-800 ${isToday ? 'bg-indigo-50/50 dark:bg-indigo-950/20' : 'bg-slate-50/40 dark:bg-slate-900/40'}">
-                            <td class="sticky left-0 z-10 px-4 py-3.5 border-r border-slate-300 dark:border-slate-800 font-bold text-slate-800 dark:text-slate-200 bg-slate-100 dark:bg-slate-900 whitespace-nowrap ${isToday ? 'border-l-4 border-l-indigo-600' : ''}">
-                                <div class="flex items-center gap-2">
-                                    <span>${day}</span>
-                                    ${isToday ? `<span class="px-1.5 py-0.5 text-[10px] font-extrabold rounded bg-indigo-600 text-white">TODAY</span>` : ''}
-                                </div>
-                            </td>
-                            <td colspan="${Math.max(1, timeColumns.length)}" class="px-4 py-3.5 text-center text-xs italic text-slate-400 dark:text-slate-500">
-                                Off Day
-                            </td>
-                        </tr>
-                    `;
                 }
 
-                const cellsHTML = timeColumns.map(col => {
+                // Active Class Day Row (populate matching time slot columns)
+                const slotCellsHTML = TIME_COLUMNS.map(col => {
                     const cls = dayClasses.find(c => `${c.startTime}-${c.endTime}` === col.key);
+
                     if (!cls) {
-                        return `<td class="px-3 py-3 border-r border-slate-200 dark:border-slate-800 text-center text-slate-300 dark:text-slate-700 font-mono text-xs">—</td>`;
+                        return `
+                            <td class="px-3 py-3 border-r border-slate-200 dark:border-slate-800 last:border-r-0 text-center align-middle text-slate-300 dark:text-slate-700 font-mono text-sm select-none">
+                                —
+                            </td>
+                        `;
                     }
 
                     const accent = SUBJECT_ACCENTS[cls.color] || SUBJECT_ACCENTS.blue;
                     const isOnline = cls.mode === 'Online';
                     const isHighlighted = cls.id === activeClassId;
 
-                    let ringClass = '';
+                    let highlightClasses = '';
+                    let liveTag = '';
                     if (isHighlighted && activeState === 'LIVE') {
-                        ringClass = 'ring-2 ring-emerald-500';
+                        highlightClasses = 'ring-2 ring-emerald-500 shadow-md shadow-emerald-500/15';
+                        liveTag = `<span class="px-1.5 py-0.5 rounded text-[9px] font-extrabold bg-emerald-600 text-white animate-pulse">LIVE</span>`;
                     } else if (isHighlighted) {
-                        ringClass = 'ring-2 ring-indigo-500/70';
+                        highlightClasses = 'ring-2 ring-indigo-500/80 shadow-sm';
+                        liveTag = `<span class="px-1.5 py-0.5 rounded text-[9px] font-bold bg-indigo-600 text-white">NEXT</span>`;
                     }
 
                     return `
-                        <td class="p-2 border-r border-slate-200 dark:border-slate-800 align-top">
-                            <div class="rounded-xl p-2.5 border ${accent.cellBg} ${ringClass} h-full flex flex-col justify-between gap-2">
-                                <div>
-                                    <div class="flex items-center justify-between gap-1">
-                                        <span class="font-mono text-[10px] font-semibold text-slate-600 dark:text-slate-400">${cls.courseCode}</span>
-                                        ${isHighlighted && activeState === 'LIVE' ? `<span class="px-1.5 py-0.2 rounded text-[9px] font-bold bg-emerald-600 text-white">LIVE</span>` : ''}
+                        <td class="p-2 border-r border-slate-200 dark:border-slate-800 last:border-r-0 align-stretch">
+                            <div class="rounded-xl p-2.5 border ${accent.cellBg} ${highlightClasses} h-full flex flex-col justify-between gap-2 transition-all">
+                                <div class="flex items-start justify-between gap-1.5">
+                                    <div class="flex items-start gap-1.5">
+                                        <span class="w-2 h-2 rounded-full ${accent.dot} mt-1.5 shrink-0"></span>
+                                        <span class="font-bold text-xs sm:text-[13px] text-slate-900 dark:text-white leading-snug">
+                                            ${cls.subject}
+                                        </span>
                                     </div>
-                                    <div class="font-bold text-xs sm:text-sm text-slate-900 dark:text-white mt-0.5 leading-snug">
-                                        ${cls.subject}
-                                    </div>
+                                    ${liveTag}
                                 </div>
-                                <div class="flex items-center justify-between gap-1 pt-1.5 border-t border-slate-300/50 dark:border-slate-700/50">
-                                    <span class="text-[10px] font-semibold ${isOnline ? 'text-cyan-700 dark:text-cyan-300' : 'text-emerald-700 dark:text-emerald-300'}">
-                                        ${cls.mode}
-                                    </span>
-                                    <span class="font-mono text-[11px] font-extrabold px-1.5 py-0.5 rounded ${isOnline ? 'bg-slate-200/80 dark:bg-slate-800 text-slate-700 dark:text-slate-300' : 'bg-emerald-600 text-white'}">
-                                        ${isOnline ? 'Online' : `Rm ${cls.room}`}
-                                    </span>
+                                <div class="flex items-center justify-end pt-1 border-t border-slate-300/50 dark:border-slate-700/50">
+                                    ${isOnline ? `
+                                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-cyan-600/15 text-cyan-800 dark:text-cyan-300 border border-cyan-500/30">
+                                            Online
+                                        </span>
+                                    ` : `
+                                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded font-mono text-[11px] font-extrabold bg-emerald-600 text-white shadow-xs">
+                                            ${cls.room}
+                                        </span>
+                                    `}
                                 </div>
                             </div>
                         </td>
@@ -1073,116 +583,32 @@
                 }).join('');
 
                 return `
-                    <tr class="border-b border-slate-300 dark:border-slate-800 ${isToday ? 'bg-indigo-50/30 dark:bg-indigo-950/15' : 'bg-white dark:bg-slate-900'}">
-                        <td class="sticky left-0 z-10 px-4 py-3.5 border-r border-slate-300 dark:border-slate-800 font-bold text-slate-900 dark:text-white bg-slate-50 dark:bg-slate-900 whitespace-nowrap align-middle ${isToday ? 'border-l-4 border-l-indigo-600' : ''}">
-                            <div class="flex flex-col gap-1">
-                                <div class="flex items-center gap-2">
-                                    <span>${day}</span>
-                                    ${isToday ? `<span class="px-1.5 py-0.5 text-[10px] font-extrabold rounded bg-indigo-600 text-white">TODAY</span>` : ''}
-                                </div>
-                                <span class="text-[11px] font-normal text-slate-500 dark:text-slate-400">
-                                    ${dayClasses[0].mode}
-                                </span>
-                            </div>
-                        </td>
-                        ${cellsHTML}
+                    <tr class="border-b border-slate-300 dark:border-slate-800 ${isToday ? 'bg-indigo-50/40 dark:bg-indigo-950/20' : 'bg-white dark:bg-slate-900'}">
+                        ${stickyDayCell}
+                        ${slotCellsHTML}
                     </tr>
                 `;
             }).join('');
 
             container.innerHTML = `
-                <div class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 shadow-sm overflow-hidden print-sheet">
-                    <div class="px-4 py-3 bg-slate-100 dark:bg-slate-850 border-b border-slate-300 dark:border-slate-800 flex flex-wrap items-center justify-between gap-2">
-                        <div class="flex items-center gap-2">
-                            <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-indigo-600 text-white">MATRIX</span>
-                            <h3 class="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200">
-                                Weekly Time-Slot Grid — WUB CSE 74D
-                            </h3>
-                        </div>
-                        <span class="text-xs text-slate-500 dark:text-slate-400 font-mono">
-                            Days × Time Slots
-                        </span>
-                    </div>
-
+                <div class="rounded-2xl bg-white dark:bg-slate-900 border-2 border-slate-300 dark:border-slate-700 shadow-sm overflow-hidden print-sheet">
                     <div class="overflow-x-auto sheet-scroll">
                         <table class="w-full text-left border-collapse">
                             <thead>
-                                <tr class="bg-slate-200/80 dark:bg-slate-800/90 text-slate-700 dark:text-slate-200 text-xs font-extrabold uppercase tracking-wider border-b-2 border-slate-300 dark:border-slate-700">
-                                    <th class="sticky left-0 z-20 px-4 py-3 border-r border-slate-300 dark:border-slate-700 bg-slate-200 dark:bg-slate-800 w-36">Day / Slot</th>
+                                <tr class="bg-slate-200/90 dark:bg-slate-800 text-slate-800 dark:text-slate-100 border-b-2 border-slate-300 dark:border-slate-700">
+                                    <th class="sticky left-0 z-20 px-4 py-3.5 border-r-2 border-slate-300 dark:border-slate-700 bg-slate-200 dark:bg-slate-800 w-36 text-xs font-extrabold uppercase tracking-wider">
+                                        Day / Time
+                                    </th>
                                     ${headerColsHTML}
                                 </tr>
                             </thead>
                             <tbody>
-                                ${matrixRowsHTML}
+                                ${rowsHTML}
                             </tbody>
                         </table>
                     </div>
                 </div>
             `;
-        }
-
-        // ==========================================
-        // COPY ROUTINE TO CLIPBOARD & TOASTS
-        // ==========================================
-        function copyScheduleToClipboard() {
-            let text = `📚 WUB CSE 74D — Official Class Routine\n`;
-            text += `World University of Bangladesh (Dept. of CSE)\n`;
-            text += `============================================\n`;
-
-            DISPLAY_DAYS.forEach(day => {
-                const dayClasses = SCHEDULE_DATA
-                    .filter(c => c.day === day)
-                    .sort((a, b) => parseTimeToMinutes(a.startTime) - parseTimeToMinutes(b.startTime));
-                if (dayClasses.length > 0) {
-                    const modeHeader = [...new Set(dayClasses.map(c => c.mode))].join(' / ');
-                    text += `\n🗓️ ${day} (${modeHeader}):\n`;
-                    dayClasses.forEach(c => {
-                        const roomInfo = c.mode === 'Online' ? 'Online' : `Room ${c.room}`;
-                        text += `  • ${formatTime12h(c.startTime)} – ${formatTime12h(c.endTime)} | ${c.subject} (${c.courseCode}) — [${roomInfo}]\n`;
-                    });
-                }
-            });
-
-            const tempInput = document.createElement('textarea');
-            tempInput.value = text.trim();
-            document.body.appendChild(tempInput);
-            tempInput.select();
-            try {
-                document.execCommand('copy');
-                showToast('Complete class routine with room numbers copied!', 'success');
-            } catch (err) {
-                showToast('Could not copy text automatically.', 'error');
-            }
-            document.body.removeChild(tempInput);
-        }
-
-        function showToast(message, type = 'info') {
-            const container = document.getElementById('toast-container');
-            const toast = document.createElement('div');
-
-            const colors = {
-                success: 'bg-emerald-600 text-white border-emerald-500',
-                info: 'bg-slate-900 dark:bg-slate-800 text-white border-slate-700',
-                error: 'bg-rose-600 text-white border-rose-500'
-            };
-
-            toast.className = `pointer-events-auto px-4 py-3 rounded-xl border shadow-xl text-xs sm:text-sm font-medium flex items-center gap-2.5 transform transition-all duration-300 translate-y-2 opacity-0 ${colors[type] || colors.info}`;
-            toast.innerHTML = `
-                <i data-lucide="${type === 'success' ? 'check-circle-2' : 'info'}" class="w-4 h-4 shrink-0"></i>
-                <span>${message}</span>
-            `;
-
-            container.appendChild(toast);
-            lucide.createIcons();
-
-            requestAnimationFrame(() => {
-                toast.classList.remove('translate-y-2', 'opacity-0');
-            });
-
-            setTimeout(() => {
-                toast.classList.add('translate-y-2', 'opacity-0');
-                setTimeout(() => toast.remove(), 300);
-            }, 3000);
         }
     </script>
 </body>
